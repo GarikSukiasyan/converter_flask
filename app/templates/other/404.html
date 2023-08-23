@@ -1,0 +1,18 @@
+{% extends '_nawbar.html' %}
+
+{% block title %}Ошибка 404{% endblock %}
+
+
+{% block body %}
+    <link href="{{ url_for('static', filename='css/404.css') }}" rel="stylesheet">
+
+    <section id="wrapper" class="container-fluid">
+        <div class="error-box">
+            <div class="error-body text-center">
+                <h1 class="text-danger">404</h1>
+                <h3>Страница не найденна !</h3> <br>
+                <a href="/" class="btn btn-danger btn-rounded m-b-40">Вернуться на главную</a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

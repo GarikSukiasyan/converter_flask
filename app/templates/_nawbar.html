@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> {% block title %} {% endblock %}</title>
+
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cookies.css') }}" type="text/css">
+<!--    <link rel="stylesheet" href="bootstrap.min.css" type="text/css">-->
+
+</head>
+<body>
+
+    <div class="container-fluid bg-dark">
+         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+             <!-- Brand -->
+             <a class="navbar-brand" href="/">Free Converter</a>
+
+             <!-- Toggler/collapsibe Button -->
+             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+                 <span class="navbar-toggler-icon"></span>
+             </button>
+
+             <!-- Navbar links -->
+             <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                 <ul class="navbar-nav">
+
+                     <li class="nav-item dropdown">
+                        <div class="dropdown">
+                          <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Новости
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/add_news">Добавить новость</a></li>
+                            <li><a class="dropdown-item" href="/news">Список новостей</a></li>
+                            <li><a class="dropdown-item" href="/add_product">Добавить продукт</a></li>
+                            <li><a class="dropdown-item" href="/list_product">Список продуктов</a></li>
+                          </ul>
+                        </div>
+                     </li>
+
+                      <li class="nav-item dropdown">
+                        <div class="dropdown">
+                          <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Товары
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/add_product">Добавить продукт</a></li>
+                            <li><a class="dropdown-item" href="/list_product">Список продуктов</a></li>
+                          </ul>
+                        </div>
+                     </li>
+
+                     <li class="nav-item dropdown">
+                        <div class="dropdown">
+                          <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Аккаунт
+                          </button>
+                          <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="/register">Регистрация</a></li>
+                              <li><a class="dropdown-item" href="/login">Вход</a></li>
+                              <li><a class="dropdown-item" href="/logout">Выйти из акка</a></li>
+                              <li><a class="dropdown-item" href="/referalka">Рефералка</a></li>
+                              <li><a class="dropdown-item" href="/ip">Мой профиль</a></li>
+                          </ul>
+                        </div>
+                     </li>
+
+                     <li class="nav-item">
+                        <div class="dropdown">
+                          <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Ещё
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="https://www.youtube.com/" target="_blank">Инструкция</a></li>
+                            <li><a class="dropdown-item" href="#">Частые вопросы</a></li>
+                            <li><a class="dropdown-item" href="https://telegram.org/" target="_blank">Отзывы</a></li>
+                          </ul>
+                        </div>
+                     </li>
+
+                     <li class="nav-item">
+                        <div class="dropdown">
+                          <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Инструменты
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/spam">Рассылка</a></li>
+                            <li><a class="dropdown-item" href="/invite">Инвайт</a></li>
+                            <li><a class="dropdown-item" href="/views">Просмотры</a></li>
+                              <li><a class="dropdown-item" href="/parsing">Парсинг</a></li>
+                          </ul>
+                        </div>
+                     </li>
+
+                 </ul>
+             </div>
+         </nav>
+    </div>
+
+
+    {% block body %} {% endblock %}
+
+
+
+    <script src="{{ url_for('static', filename='js/cookies.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-3.6.3.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+</body>
+</html>

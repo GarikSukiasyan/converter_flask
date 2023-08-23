@@ -1,4 +1,13 @@
 # converter_flask
 Project from flask to converter 
 
-Тестовое сообщение
+Онлайн конвертер
+функционал:
+    Конверт видео
+        ffmpeg
+    Конверт картинок
+        Pillow
+        ffmpeg
+    Конверт таблиц
+
+Пример сайта: https://convertio.co/ru/
