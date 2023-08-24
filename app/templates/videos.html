@@ -4,4 +4,29 @@
 
 {% block body %}
 Выберите видео
+    <div class="container mt-5">
+        <form method="post" enctype=multipart/form-data>
+            <!-- Bootstrap select -->
+             <select name="text" id="format_video" class="form-select" aria-label="Default select example">
+                  <option selected>Выберите формат</option>
+                  <option value="1">mp4</option>
+                  <option value="2">avi</option>
+                  <option value="3">gif</option>
+            </select>
+
+            Выберите обложку:
+            <input type=file name=file>
+            <br><br>
+            <input type="submit" class="btn btn-success" value="Загрузить"><br>
+        </form>
+
+        <form action="/process_select" method="post">
+            <select name="my_select">
+                <option value="option1">Опция 1</option>
+                <option value="option2">Опция 2</option>
+                <option value="option3">Опция 3</option>
+            </select>
+            <br> <input type="submit" value="Отправить">
+        </form>
+    </div>
 {% endblock %}
