@@ -7,7 +7,9 @@
 
         <form method="post" action="/videos" enctype=multipart/form-data>
             <!-- Bootstrap select -->
-             <select name="my_select" class="form-select" aria-label="Default select example">
+            Выберите формат в который нужно конвертировать видео:
+
+             <select name="my_select" class="form-select p-3" aria-label="Default select example">
                   <option selected>Выберите формат</option>
                   <option value="mp4">mp4</option>
                   <option value="avi">avi</option>
@@ -15,21 +17,24 @@
             </select>
 
             Выберите видео для загрузки
-            <input type=file name=file>
-            <br><br>
-            <input type="submit" class="btn btn-success" value="Загрузить"><br>
+            <input type=file class="p-3" name=file id="fileInput" onchange="checkFile()">
+            <button id="submitButton" class="btn btn-success p-3" style="display: none;">Отправить</button>
         </form>
 
-<!--        <form action="/process_select" method="post">-->
 
-<!--            <select name="my_select">-->
-<!--                <option value="option1">Опция 1</option>-->
-<!--                <option value="option2">Опция 2</option>-->
-<!--                <option value="option3">Опция 3</option>-->
-<!--            </select>-->
 
-<!--            <br> <input type="submit" value="Отправить">-->
-<!--        </form>-->
 
+    <script>
+    function checkFile() {
+          var fileInput = document.getElementById('fileInput'); // Получаем элемент input
+          var submitButton = document.getElementById('submitButton'); // Получаем кнопку отправки
+
+          if (fileInput.files.length > 0) { // Проверяем, есть ли загруженный файл
+                submitButton.style.display = 'block'; // Показываем кнопку отправки
+          } else {
+                submitButton.style.display = 'none'; // Скрываем кнопку отправки
+          }
+    }
+    </script>
     </div>
 {% endblock %}
