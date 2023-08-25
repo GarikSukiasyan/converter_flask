@@ -11,7 +11,7 @@ UPLOAD_FOLDER = 'app/static/uploadFile/'
 ALLOWED_EXTENSIONS = {'mp4', 'avi', 'gif'}
 # конфигурируем Загрузку файлов
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024 # 16 МБ
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16 МБ
 
 
 def allowed_file(filename):
@@ -38,12 +38,13 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
+            print(filename)
 
             len_files = len(os.listdir("app/static/uploadFile/"))
             filename = int(len_files) + int(1)
             filename = str(file.filename) + "_" + str(filename) + str(".mp4")
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('home'), 302)
+            return redirect('/output/iasd231sd/')
 
     return render_template("videos.html")

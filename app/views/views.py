@@ -10,7 +10,4 @@ def home():
     return render_template("home.html")
 
 
-@app.route('/output/<path:id>')
-def output(id):
-    # Ваш код обработки перехода по URL с переменной id
-    return 'Переход по URL: output/{}'.format(id)
+

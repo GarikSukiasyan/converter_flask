@@ -11,3 +11,7 @@ Project from flask to converter
     Конверт таблиц
 
 Пример сайта: https://convertio.co/ru/
+
+
+Сайт принимает файл и уникальный id пользователя,
+Далее добавлет

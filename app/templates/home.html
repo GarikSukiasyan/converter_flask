@@ -3,5 +3,63 @@
 {% block title %}Free Connvertor{% endblock %}
 
 {% block body %}
-Бесплатный конвертер онлайн
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Free Converter</h1>
+                <p class="lead text-body-secondary">
+                    Бесплатный онлайн конвертер файлов 24/7 без регистрации и смс.
+                Мы поможем Вам с конвертацией файлов. У файлов ограничение в 50 Мб.
+                <br>Мы работаем уже: <p id="result"></p>
+                <br>Всего конвертировано файло:
+                <br>Всего конвертировано: 0 МБ
+                </p>
+                <br> Выберите что Вам нужно конвертировать:
+                <br>
+                <p class="p-3">
+                    <a href="/images" class="btn btn-success my-2">Картинки</a>
+                    <a href="/videos" class="btn btn-success my-2">Видео</a>
+                    <a href="/documents" class="btn btn-success my-2">Документы</a>
+                </p>
+            </div>
+        </div>
+  </section>
+
+  <script>
+  window.onload = function() {
+    var targetDate = new Date("2022/01/01"); // Укажите желаемую дату здесь
+
+    function updateTimer() {
+        // Указываем дату, от которой нужно считать время
+        var specifiedDate = new Date('2023-08-21T00:00:00');
+
+        // Получаем текущую дату и время
+        var currentDate = new Date();
+
+        // Разница между указанной датой и текущей датой в миллисекундах
+        var timeDiff = currentDate - specifiedDate;
+
+        // Количество миллисекунд в одной минуте, часе, дне и месяце
+        var millisecondInMinute = 1000 * 60;
+        var millisecondInHour = millisecondInMinute * 60;
+        var millisecondInDay = millisecondInHour * 24;
+        var millisecondInMonth = millisecondInDay * 30;
+
+        // Вычисляем количество месяцев, дней, часов, минут и секунд
+        var months = Math.floor(timeDiff / millisecondInMonth);
+        var days = Math.floor((timeDiff % millisecondInMonth) / millisecondInDay);
+        var hours = Math.floor((timeDiff % millisecondInDay) / millisecondInHour);
+        var minutes = Math.floor((timeDiff % millisecondInHour) / millisecondInMinute);
+        var seconds = Math.floor((timeDiff % millisecondInMinute) / 1000);
+
+        // Выводим результат на страницу
+        var result = document.getElementById('result');
+        result.innerHTML = '0000:0' + months + ':0' + days + ':' + hours + ':' + minutes + ':' + seconds;
+                    }
+
+            // Запускаем обновление каждую секунду
+            setInterval(updateTimer, 1000);
+        };
+  </script>
+
 {% endblock %}
