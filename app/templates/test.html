@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
+  <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+</head>
+<body>
+  <h1>Подсчет до 1 миллиона</h1>
+  <div id='count'></div>
+
+  <script type="text/javascript">
+    var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
+
+    // Обработчик события, когда приходит новое значение подсчета
+    socket.on('count_update', function(data) {
+        $('#count').text(data.count);
+    });
+  </script>
+</body>
+</html>
