@@ -1,4 +1,3 @@
-from app import app
 from config import app
 import logging
 

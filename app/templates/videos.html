@@ -4,7 +4,6 @@
 
 {% block body %}
     <div class="container mt-5">
-
         <form method="post" action="/videos" enctype=multipart/form-data>
             <!-- Bootstrap select -->
             Выберите формат в который нужно конвертировать видео:
@@ -20,8 +19,7 @@
             <input type=file class="p-3" name=file id="fileInput" onchange="checkFile()">
             <button id="submitButton" class="btn btn-success p-3" style="display: none;">Отправить</button>
         </form>
-
-
+    </div>
 
 
     <script>
@@ -36,5 +34,5 @@
           }
     }
     </script>
-    </div>
+
 {% endblock %}

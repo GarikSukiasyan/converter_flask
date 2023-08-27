@@ -1,10 +1,9 @@
+import random
 import threading
 import time
-
 from app import app
 from flask import render_template
-
-from app import app, socketio
+from flask import Flask, jsonify, request
 
 
 @app.route('/')
@@ -13,23 +12,15 @@ def home():
     return render_template("home.html")
 
 
-# Функция для выполнения подсчета
-def count_to_million():
-    for i in range(10):
-        time.sleep(1.0)
-        # Отправляем текущее значение на фронтенд
-        socketio.emit('count_update', {'count': i}, namespace='/test')
+# https://learn.javascript.ru/xmlhttprequest
+# Маршрут для обработки GET-запроса
+@app.route("/data", methods=["GET"])
+def get_data():
+    data = {'name': 'John', 'age': 30}
+    return jsonify(data)
 
 
-# Обработчик для обработки подключения к сокету
-@socketio.on('connect', namespace='/test')
-def test_connect():
-    print('Client connected')
-    # Запускаем фоновый поток для выполнения подсчета
-    threading.Thread(target=count_to_million).start()
-
-# Отправляем статический HTML-файл для отображения подсчета
-@app.route('/test')
-def test():
-    return render_template('test.html')
-
+@app.route("/progress", methods=["GET"])
+def get_progress():
+    data = {'progress': random.randint(0, 99)}
+    return jsonify(data)
