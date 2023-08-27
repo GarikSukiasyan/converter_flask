@@ -15,9 +15,9 @@ def home():
 
 # https://learn.javascript.ru/xmlhttprequest
 # Маршрут для обработки GET-запроса
-@app.route("/data", methods=["GET"])
+@app.route("/info", methods=["GET"])
 def get_data():
-    data = {'name': 'John', 'age': 30}
+    data = {'all_num_mb': 0, 'all_num_file': 0}
     return jsonify(data)
 
 

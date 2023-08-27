@@ -43,7 +43,6 @@ def upload_file():
             for i in range(24):
                 file_id += random.choice(chars)
             response = make_response(redirect(f'/output/{file_id}/'))
-
             all_user_key.append(file_id)
 
             oldFileName = secure_filename(file.filename)

@@ -9,12 +9,13 @@ function updateNumConvert() {
 
             var response = JSON.parse(xhr2.responseText);
             //document.getElementById('num_file').innerHTML = 'Name: ' + response.name + ', Age: ' + response.age;
-            $('#num_file').text(response.name);
+            $('#num_file').text(response.all_num_file);
+            $('#mb_file').text(response.all_num_mb);
         }
     };
 
     // Открываем соединение с сервером с помощью метода GET
-    xhr2.open("GET", "/data", true);
+    xhr2.open("GET", "/info", true);
 
     // Отправляем запрос на сервер
     xhr2.send();
