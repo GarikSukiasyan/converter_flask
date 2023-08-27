@@ -1,13 +1,14 @@
+import time
 import random
 import threading
-import time
-from app import app
+from app import app, all_user_key
 from flask import render_template
-from flask import Flask, jsonify, request
+from flask import jsonify, request
 
 
 @app.route('/')
 def home():
+    print(all_user_key)
     # Возвращаем шаблон страницы и передаем данные из базы
     return render_template("home.html")
 

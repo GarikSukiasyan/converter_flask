@@ -1,8 +1,7 @@
 import os
 import random
 import subprocess
-from app import app
-# from config import secret_key
+from app import app, all_user_key
 from flask import request, flash, render_template, redirect, url_for, make_response
 from werkzeug.utils import secure_filename
 
@@ -45,7 +44,7 @@ def upload_file():
                 file_id += random.choice(chars)
             response = make_response(redirect(f'/output/{file_id}/'))
 
-            # all_user_key.append(file_id)
+            all_user_key.append(file_id)
 
             oldFileName = secure_filename(file.filename)
             # print(filename)
