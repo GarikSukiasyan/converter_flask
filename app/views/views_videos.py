@@ -1,10 +1,9 @@
 import os
 import random
-import subprocess
 from app import app, all_user_key
-from flask import request, flash, render_template, redirect, url_for, make_response
+from flask import flash, render_template, redirect, make_response
 from werkzeug.utils import secure_filename
-
+from flask import jsonify, request
 
 # папка для сохранения загруженных файлов
 UPLOAD_FOLDER = 'app/static/uploadFile/'
@@ -42,7 +41,7 @@ def upload_file():
             file_id = ''
             for i in range(24):
                 file_id += random.choice(chars)
-            response = make_response(redirect(f'/output/{file_id}/'))
+            response = make_response(redirect(f'/output/{file_id}'))
             all_user_key.append(file_id)
 
             oldFileName = secure_filename(file.filename)
@@ -51,7 +50,6 @@ def upload_file():
             len_files = len(os.listdir("app/static/uploadFile/"))
             filename = int(len_files) + int(1)
             filename = str(file.filename) + "_" + str(filename) + str(".mp4")
-
             # print(filename)
 
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -61,14 +59,10 @@ def upload_file():
             response.set_cookie("inputFileName", oldFileName, max_age=60 * 60 * 24 * 365 * 2)
             response.set_cookie("outputFileName", filename, max_age=60 * 60 * 24 * 365 * 2)
 
-            # https://pypi.org/project/ffmpeg-progress-yield/
-            # ffmpeg -i input.mkv -vcodec copy -acodec copy output.mov
-            # subprocess.call([
-            #     "ffmpeg",
-            #     "-i", f"app/static/uploadFile/{filename}",
-            #     "-c:a", "copy",
-            #     f"app/static/output/{filename}.avi"])
+            # start_thr(filename, file_id)
 
             return response
 
-    return render_template("videos.html")
+    response = make_response(render_template("videos.html"))
+    response.set_cookie("id", "0", max_age=60 * 60 * 24 * 365 * 2)
+    return response

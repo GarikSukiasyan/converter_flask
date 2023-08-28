@@ -19,8 +19,11 @@
             <input type=file class="p-3" name=file id="fileInput" onchange="checkFile()">
             <button id="submitButton" class="btn btn-success p-3" style="display: none;">Отправить</button>
         </form>
+
     </div>
 
+<!--    <script src="{{ url_for('static', filename='js/videos/videos.js') }}"></script>-->
     <script src="{{ url_for('static', filename='js/videos/check_file.js') }}"></script>
+<!--    <script src="{{ url_for('static', filename='js/videos/progressBar.js') }}"> </script>-->
 
 {% endblock %}

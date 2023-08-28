@@ -18,12 +18,16 @@
 
                 </p>
                 <p class="p-3">
-                    <a href="/images" class="btn btn-success my-2">Скачать</a>
+<!--                    <a href="/images" class="btn btn-success my-2">Скачать</a>-->
+                    <a id="submitButton" href="#" class="btn btn-success p-3" style="display: none;" target="_blank" download>Download</a>
+<!--                    <button id="submitButton" class="btn btn-success p-3" style="display: none;">Скачать</button>-->
                 </p>
             </div>
         </div>
     </section>
 
+
+    <script src="{{ url_for('static', filename='js/output/check_file.js') }}"></script>
     <script src="{{ url_for('static', filename='js/output/output_progressBar.js') }}"> </script>
 
 {% endblock %}
