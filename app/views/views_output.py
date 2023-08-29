@@ -1,18 +1,13 @@
 import os
 import os.path
-
-from app import app, all_user_key
-from flask import render_template, request, send_from_directory
-from threading import Thread
-import random
 from app import app
-from flask import render_template
-from flask import flash, render_template, redirect, make_response
 from flask import jsonify
+from threading import Thread
+from flask import render_template
 from ffmpeg_progress_yield import FfmpegProgress
 # https://pypi.org/project/ffmpeg-progress-yield/
 
-list_file = []
+list_file_process = []
 
 
 
@@ -40,7 +35,7 @@ class ffm():
             self.progress = progress
             # print(f"{progress}/100")
 
-        list_file.remove(file_id)
+        list_file_process.remove(file_id)
         self.status = True
 
     def start_thr(self, file_id):
@@ -55,8 +50,8 @@ class ffm():
 
 
 
-xt = ffm()
 
+xt = ffm()
 
 
 
@@ -74,46 +69,34 @@ def output(file_id):
 
         elif len(file_list) == 1:  # Если один файл
 
-            list_file.append(file_id)
+            list_file_process.append(file_id)
 
-            # Запускаем конверт
-            xt.start_thr(file_id)
+            xt.start_thr(file_id)  # Запускаем конверт
 
             json_data = {'progress': 0, 'download': False, 'file_id': file_id, 'nameFile': 'None'}
             return render_template("output.html", json_data=json_data)
-
     else:
         # print("Папка не существует.")
         return render_template('other/404.html'), 404
 
 
 
-@app.route("/ffmpeg_status", methods=["GET"])
-def ffmpeg_status():
-    progress, stat, file_id, fileName = xt.info_thr()
-    if stat == False:
-        data = {'progress': progress, 'download': False, 'file_id': file_id, 'nameFile': fileName}
-        return jsonify(data)
-    elif stat == True:
-        # print("Папка существует.")
-        file_list = os.listdir(f"app/static/output/{file_id}/")
 
-        # Если два файла
-        if len(file_list) == 2:
-            if file_list[0].replace(".", " ") == "output":
-                # Возвращаем страницу + json progressbar: 100 status: True NameFile: file_list[0]
-                data = {'progress': 100, 'download': True, 'file_id': file_id, 'nameFile': fileName}
-                return jsonify(data)
-            elif file_list[1].replace(".", " ") == "output":
-                # Возвращаем страницу + json progressbar: 100 status: True NameFile: file_list[1]
-                data = {'progress': 100, 'download': True, 'file_id': file_id, 'nameFile': fileName}
+@app.route("/ffmpeg_status/<file_id>", methods=["GET"])
+def ffmpeg_status(file_id):
+    if os.path.isdir(f"app/static/output/{file_id}/"):
+        if file_id not in list_file_process:
+            file_list = os.listdir(f"app/static/output/{file_id}/")
+            if len(file_list) == 2:
+                data = {'progress': 100, 'download': 'True', 'file_id': file_id, 'nameFile': file_list[1]}
                 return jsonify(data)
             else:
-                data = {'progress': 0, 'download': False, 'file_id': 'None', 'nameFile': 'None'}
+                data = {'progress': 0, 'download': 'False', 'file_id': file_id, 'nameFile': 'None'}
                 return jsonify(data)
-
-
-
-    # Ваш код обработки перехода по URL с переменной id
-    # json_data = {'file_id': file_id}
-    # return render_template("output.html", json_data=json_data)
+        else:
+            progress, stat, file_id, fileName = xt.info_thr()
+            data = {'progress': progress, 'download': stat, 'file_id': file_id, 'nameFile': fileName}
+            return jsonify(data)
+    else:
+        data = {'progress': 0, 'download': 'False', 'file_id': file_id, 'nameFile': 'None'}
+        return jsonify(data)
