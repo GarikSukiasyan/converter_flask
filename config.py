@@ -1,4 +1,4 @@
-from app import app
+from app import app, socketio
 
 # Дебаг FLASK
 CFG_DEBUG_FLASK = True

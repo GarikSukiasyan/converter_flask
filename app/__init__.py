@@ -1,6 +1,8 @@
+from flask_socketio import SocketIO
 from flask import Flask
 
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 # Список id пользователей (ссылок) в очереди
 all_user_key = []

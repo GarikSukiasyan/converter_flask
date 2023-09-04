@@ -1,31 +1,44 @@
+var intervalId;
+
+function updateNumConvert() {
+    // Создаем новый объект XMLHttpRequest
+    var xhr2 = new XMLHttpRequest();
+
+    // Настраиваем обработчик события при успешном получении ответа от сервера
+    xhr2.onreadystatechange = function() {
+        if (xhr2.readyState === 4 && xhr2.status === 200) {
+            var response = JSON.parse(xhr2.responseText);
+
+            const progressBar = document.querySelector('.progress-bar-inner');
+
+            function updateProgressBar(value) {
+                progressBar.style.width = value + '%';
+            }
+
+            updateProgressBar(response.progress);
+
+            if (response.progress == 100) {
+                var submitButton = document.getElementById('submitButton');
+                var downloadLink = 'http://127.0.0.1:5000/static/output/' + response.file_id + '/' + response.nameFile;
+
+                submitButton.style.display = 'block';
+                submitButton.href = downloadLink;
+
+                clearInterval(intervalId); // Останавливаем интервал
+            }
+        }
+    };
+
+    xhr2.open("GET", "/ffmpeg_status", true);
+    xhr2.send();
+}
+
+intervalId = setInterval(updateNumConvert, 1000);
+
+/*
 function updateNumConvert() {
 // Создаем новый объект XMLHttpRequest
 var xhr2 = new XMLHttpRequest();
-
-
-// Чтение cookie
-function getCookie(name) {
-	var cookieArr = document.cookie.split(";");
-
-	for (var i = 0; i < cookieArr.length; i++) {
-		var cookiePair = cookieArr[i].split("=");
-
-		// Удаляем пробелы в начале и конце имени cookie
-		var cookieName = cookiePair[0].trim();
-
-		// Если найдено совпадение имени cookie, возвращаем значение
-		if (cookieName === name) {
-			return decodeURIComponent(cookiePair[1]);
-		}
-	}
-
-	// Если cookie не найдено, возвращаем пустую строку
-	return "";
-	}
-//console.log("Hello");
-// Чтение печенек
-var file_id = getCookie("id");
-//console.log(username);
 
 
 
@@ -45,7 +58,7 @@ xhr2.onreadystatechange = function() {
 
         if (response.progress == 100) {
             var submitButton = document.getElementById('submitButton');
-            var downloadLink = 'http://127.0.0.1:5000/static/output/' + file_id + '/output.mp4';
+            var downloadLink = 'http://127.0.0.1:5000/static/output/' + response.file_id + '/' + response.nameFile;
 
             submitButton.style.display = 'block'; // Показываем кнопку отправки
             submitButton.href = downloadLink;
@@ -65,3 +78,4 @@ xhr2.send();
 
 // Запускаем обновление каждую секунду
 setInterval(updateNumConvert, 1000);
+*/
