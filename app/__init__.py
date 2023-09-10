@@ -1,8 +1,9 @@
 from flask_socketio import SocketIO
 from flask import Flask
-
+# pip install gevent-websocket
+# pip install eventlet
 app = Flask(__name__)
-socketio = SocketIO(app)
+socketio = SocketIO(app, async_mode='eventlet') #, cors_allowed_origins="*")
 
 # Список id пользователей (ссылок) в очереди
 all_user_key = []

@@ -28,7 +28,7 @@
 
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
-<!--    <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>-->
+    <script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
 <!--    <script src="{{ url_for('static', filename='js/output/test.js') }}"></script>>-->
     <script>
         var json_data = JSON.parse('{{ json_data | tojson | safe }}');
@@ -45,10 +45,28 @@
 
         var socket = io.connect('http://' + document.domain + ':' + location.port + '/test');
 
+        // Обработка события "connect"
+        socket.on('connect', function() {
+            // Присоединиться к комнате с идентификатором сессии в браузере
+            var sessionID = '{{ json_data.file_id }}';
+            socket.emit('join', sessionID);
+        });
+
+
         // Обработчик события, когда приходит новое значение подсчета
         socket.on('count_update', function(data) {
-            $('#count').text(data.count);
+<!--            $('#count').text(data.count);-->
+            // Присоединиться к комнате с идентификатором сессии в браузере
+            var sessionID = '{{ json_data.file_id }}';
+            socket.emit('join', sessionID);
+
         });
+
+      // Обработка присоединения к комнате
+        socket.on('join', function(room) {
+            console.log('Присоединено к комнате:', room)
+        });
+
 
         socket.on('update_data', function (data) {
             console.log('Получено обновление:', data.progress);

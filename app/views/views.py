@@ -10,7 +10,8 @@ from flask import jsonify, request
 def home():
     # print(all_user_key)
     # Возвращаем шаблон страницы и передаем данные из базы
-    return render_template("home.html")
+    json_data = {'progress': 0, 'download': False, 'file_id': 'file_name1', 'nameFile': 'None'}
+    return render_template("home.html", json_data=json_data)
 
 
 # https://learn.javascript.ru/xmlhttprequest
