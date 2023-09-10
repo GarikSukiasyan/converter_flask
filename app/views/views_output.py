@@ -96,24 +96,10 @@ class ffm():
 
 
 
-
-
-
-
-# @socketio.on('connect', namespace='/test')
-# def test_connect():
-#     emit('update_data', {'progress': 0})
-#     simulate_progress()
-
-
-
-
-
 def simulate_progress(file_id):
     """Он не может остановиться почему то"""
     xt = ffm()
 
-    # print(list_file_process)
     xt.start_thr(file_id)  # Запускаем конверт
 
     progress = 0
@@ -122,27 +108,28 @@ def simulate_progress(file_id):
         progress_tx, stat, file_id2, fileName = xt.info_thr()
         data = {'progress': int(progress_tx), 'download': stat, 'file_id': file_id2, 'nameFile': fileName}
         progress = int(progress_tx)
-        # print(file_id)
-        # print(file_id, progress_tx)
         socketio.emit('update_data', data, namespace="/test", room=file_id)
 
 
 @socketio.on("connect", namespace='/test')
 def test_connect():
     print("connect")
-    # socketio.start_background_task(target=simulate_progress)
 
 
 @socketio.on('join', namespace='/test')
 def on_join(room):
-    join_room(room)
-    print('Присоединено к комнате:', room)
-    list_file_process.append(room)
+    if os.path.isdir(f"app/static/output/{room}/"):
+        if room not in list_file_process:
+            file_list = os.listdir(f"app/static/output/{room}/")
+            if len(file_list) == 2:
+                pass
+            else:
+                join_room(room)
+                list_file_process.append(room)
+                while list_file_process.index(room) != 0:
+                    socketio.sleep(3)
 
-    while list_file_process.index(room) != 0:
-        print('Ждем очереди : ' + str(room))
-        socketio.sleep(1)
-    socketio.start_background_task(target=simulate_progress(room))
+                socketio.start_background_task(target=simulate_progress(room))
 
 
 @socketio.on("disconnect", namespace='/test')
