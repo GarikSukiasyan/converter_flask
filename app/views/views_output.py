@@ -81,6 +81,7 @@ class ffm():
             self.progress = progress
 
         list_file_process.remove(file_id)
+        print(list_file_process)
         self.status = True
 
     def start_thr(self, file_id):
@@ -109,19 +110,20 @@ class ffm():
 
 
 def simulate_progress(file_id):
+    """Он не может остановиться почему то"""
     xt = ffm()
 
-    list_file_process.append(file_id)
-    print(list_file_process)
+    # print(list_file_process)
     xt.start_thr(file_id)  # Запускаем конверт
 
     progress = 0
-    while progress != 100:
+    while progress < 95:
         socketio.sleep(1)  # Имитация задержки в выполнении
-        progress_tx, stat, file_id, fileName = xt.info_thr()
-        data = {'progress': int(progress_tx), 'download': stat, 'file_id': file_id, 'nameFile': fileName}
-        progress = progress_tx
-        print(file_id)
+        progress_tx, stat, file_id2, fileName = xt.info_thr()
+        data = {'progress': int(progress_tx), 'download': stat, 'file_id': file_id2, 'nameFile': fileName}
+        progress = int(progress_tx)
+        # print(file_id)
+        # print(file_id, progress_tx)
         socketio.emit('update_data', data, namespace="/test", room=file_id)
 
 
@@ -135,6 +137,11 @@ def test_connect():
 def on_join(room):
     join_room(room)
     print('Присоединено к комнате:', room)
+    list_file_process.append(room)
+
+    while list_file_process.index(room) != 0:
+        print('Ждем очереди : ' + str(room))
+        socketio.sleep(1)
     socketio.start_background_task(target=simulate_progress(room))
 
 

@@ -58,6 +58,7 @@
 <!--            $('#count').text(data.count);-->
             // Присоединиться к комнате с идентификатором сессии в браузере
             var sessionID = '{{ json_data.file_id }}';
+            console.log(sessionID)
             socket.emit('join', sessionID);
 
         });
